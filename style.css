@@ -2,6 +2,10 @@
     width: 700px;
     border: solid;
     align-items: center;
+    background-color: pink;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #screen {
@@ -12,11 +16,15 @@
     align-content: center;
     text-align: right;
     font-size: 30px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
 }
 
 #buttons {
     border: solid;
-    display: inline-block;
+    display: flex;
+    border-radius: 10px;
+    padding-left: 20px;
 }
 
 #numbers {
@@ -29,10 +37,28 @@
 .button {
     width: 150px;
     height: 150px;
-    border: solid;
     align-content: center;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     font-size: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: yellow;
+    border-radius: 25px;
+}
+
+#operators{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.operator{
+    height: 100px;
+    width: 150px;
+    margin-top: 20px;
+    background-color: yellow;
+    border-radius: 25px;
+    font-size: 40px;
 }
