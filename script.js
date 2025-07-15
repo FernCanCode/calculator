@@ -1,6 +1,7 @@
 let num1 = null;
 let num2 = null;
 let operator = null;
+let isResult = false;
 
 
 
@@ -79,46 +80,50 @@ addEventListener("DOMContentLoaded", () => {
     const numbers = document.querySelector('#numbers');
     //Event delegation for number buttons
     numbers.addEventListener('click', (element)=> {
+        if(isResult && !checkHasOperator(screenText)){
+            isResult=false;
+            clearScreen(screenText);
+        }
         switch (element.target.id) {
             case 'zero':
                 writeToScreen(screenText, '0');
-                console.log('0');
+                //console.log('0');
                 break;
             case 'one':
                 writeToScreen(screenText, '1');
-                console.log('1');
+                //console.log('1');
                 break;
             case 'two':
                 writeToScreen(screenText, '2');
-                console.log('2');
+                //console.log('2');
                 break;
             case 'three':
                 writeToScreen(screenText, '3');
-                console.log('3');
+                //console.log('3');
                 break;
             case 'four':
                 writeToScreen(screenText, '4');
-                console.log('4');
+                //console.log('4');
                 break;
             case 'five':
                 writeToScreen(screenText, '5');
-                console.log('5');
+                //console.log('5');
                 break;
             case 'six':
                 writeToScreen(screenText, '6');
-                console.log('6');
+                //console.log('6');
                 break;
             case 'seven':
                 writeToScreen(screenText, '7');
-                console.log('7');
+                //console.log('7');
                 break;
             case 'eight':
                 writeToScreen(screenText, '8');
-                console.log('8');
+                //console.log('8');
                 break;
             case 'nine':
                 writeToScreen(screenText, '9');
-                console.log('9');
+                //console.log('9');
                 break;
             default:
                 break;
@@ -129,24 +134,66 @@ addEventListener("DOMContentLoaded", () => {
     //Event delegation for operator buttons
     operators.addEventListener('click', (element) => {
         switch(element.target.id) {
+            case 'clear':
+                clearScreen(screenText);
+                //console.log('clear');
+                break;
             case 'divide':
-                writeToScreen(screenText, '/');
-                console.log('divide');
+                if(checkHasOperator(screenText) && checkIsCalculable(screenText)){
+                    let values = parseValues(screenText);
+                    let result = operate(values[2], values[0], values[1]);
+                    clearScreen(screenText);
+                    writeToScreen(screenText, result);
+                }
+                if(!checkHasOperator(screenText)){
+                    writeToScreen(screenText, '/');
+                }
+                //console.log('divide');
                 break;
             case 'multiply':
-                writeToScreen(screenText, 'x');
-                console.log('multiply');
+                if(checkHasOperator(screenText) && checkIsCalculable(screenText)){
+                    let values = parseValues(screenText);
+                    let result = operate(values[2], values[0], values[1]);
+                    clearScreen(screenText);
+                    writeToScreen(screenText, result);
+                }
+                if(!checkHasOperator(screenText)){
+                    writeToScreen(screenText, '*');
+                }
+                //console.log('multiply');
                 break;
             case 'subtract':
-                writeToScreen(screenText, '-');
-                console.log('subtract');
+                if(checkHasOperator(screenText) && checkIsCalculable(screenText)){
+                    let values = parseValues(screenText);
+                    let result = operate(values[2], values[0], values[1]);
+                    clearScreen(screenText);
+                    writeToScreen(screenText, result);
+                }
+                if(!checkHasOperator(screenText)){
+                    writeToScreen(screenText, '-');
+                }
+                //console.log('subtract');
                 break;
             case 'add':
-                writeToScreen(screenText, '+');
-                console.log('add');
+                if(checkHasOperator(screenText) && checkIsCalculable(screenText)){
+                    let values = parseValues(screenText);
+                    let result = operate(values[2], values[0], values[1]);
+                    clearScreen(screenText);
+                    writeToScreen(screenText, result);
+                }
+                if(!checkHasOperator(screenText)){
+                    writeToScreen(screenText, '+');
+                }
+                //console.log('add');
                 break;
             case 'equals':
-                console.log('equals');
+                if(checkHasOperator(screenText) && checkIsCalculable(screenText)){
+                    let values = parseValues(screenText);
+                    let result = operate(values[2], values[0], values[1]);
+                    clearScreen(screenText);
+                    writeToScreen(screenText, result);
+                    isResult = true;
+                }
                 break;
         }
     });
@@ -154,6 +201,44 @@ addEventListener("DOMContentLoaded", () => {
     function writeToScreen(screenElement, inputText){
         currentText = screenElement.textContent;
         screenElement.textContent=currentText + inputText;
+    }
+
+    function clearScreen(screenElement) {
+        screenElement.textContent= '';
+    }
+
+    function parseValues(screenText){
+        let textStr = screenText.textContent;
+        let numArr = textStr.split((/[+\-/*]/));
+        let operator = getOperator(textStr);
+        let num1 = Number(numArr[0]);
+        let num2 = Number(numArr[1]);
+        //console.log(numArr + '\n' + operator);
+        //console.log(typeof operator[0]);
+        const strParts = [num1, num2, operator[0]];
+        return strParts;
+    }
+    function getOperator(screenStr){
+        const operator = screenStr.match(/[+\-/*]/g);
+        //console.log('operator: ' + operator);
+        return operator;
+    }
+
+    function checkHasOperator(screenText){
+        let textStr = screenText.textContent;
+        const operator = getOperator(textStr);
+        if(operator === null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    //Checks if the screen text follows the format Number - Symbol - Number
+    function checkIsCalculable(screenText){
+        let str = screenText.textContent;
+        return  /^\d+[+\-*/]\d+$/.test(str);
     }
 
 });
