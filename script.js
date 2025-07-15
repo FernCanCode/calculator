@@ -53,9 +53,11 @@ function operate(operator, num1, num2){
     }
 }
 
+
+
 addEventListener("DOMContentLoaded", () => {
     //Display screen
-    const screen = document.querySelector("#screen");
+    const screenText = document.querySelector("#displayText");
     //Number buttons
     const zero = document.querySelector('#zero');
     const one = document.querySelector('#one');
@@ -79,33 +81,43 @@ addEventListener("DOMContentLoaded", () => {
     numbers.addEventListener('click', (element)=> {
         switch (element.target.id) {
             case 'zero':
+                writeToScreen(screenText, '0');
                 console.log('0');
                 break;
             case 'one':
+                writeToScreen(screenText, '1');
                 console.log('1');
                 break;
             case 'two':
+                writeToScreen(screenText, '2');
                 console.log('2');
                 break;
             case 'three':
+                writeToScreen(screenText, '3');
                 console.log('3');
                 break;
             case 'four':
+                writeToScreen(screenText, '4');
                 console.log('4');
                 break;
             case 'five':
+                writeToScreen(screenText, '5');
                 console.log('5');
                 break;
             case 'six':
+                writeToScreen(screenText, '6');
                 console.log('6');
                 break;
             case 'seven':
+                writeToScreen(screenText, '7');
                 console.log('7');
                 break;
             case 'eight':
+                writeToScreen(screenText, '8');
                 console.log('8');
                 break;
             case 'nine':
+                writeToScreen(screenText, '9');
                 console.log('9');
                 break;
             default:
@@ -118,15 +130,19 @@ addEventListener("DOMContentLoaded", () => {
     operators.addEventListener('click', (element) => {
         switch(element.target.id) {
             case 'divide':
+                writeToScreen(screenText, '/');
                 console.log('divide');
                 break;
             case 'multiply':
+                writeToScreen(screenText, 'x');
                 console.log('multiply');
                 break;
             case 'subtract':
+                writeToScreen(screenText, '-');
                 console.log('subtract');
                 break;
             case 'add':
+                writeToScreen(screenText, '+');
                 console.log('add');
                 break;
             case 'equals':
@@ -134,4 +150,10 @@ addEventListener("DOMContentLoaded", () => {
                 break;
         }
     });
+
+    function writeToScreen(screenElement, inputText){
+        currentText = screenElement.textContent;
+        screenElement.textContent=currentText + inputText;
+    }
+
 });
